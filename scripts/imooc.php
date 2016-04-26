@@ -5,8 +5,13 @@
  */
 error_reporting(E_ALL);
 
-require_once "lib/Crawler.php";
-require_once "vendor/autoload.php";
+require_once dirname(__FILE__) . '../autoload.php';
+
+
+//提供 url ，正则，插入数据库
+//比较多进程，多线程，分布式爬虫
+//将url与正则插入数据库，
+
 
 $crawler = new Crawler();
 
@@ -22,13 +27,13 @@ function process(Crawler $crawler, $urls)
 {
     $responses = $crawler->getMultiResponse($urls);
 
-    if (false === $responses) {
-        return false;
+    if (FALSE === $responses) {
+        return FALSE;
     }
 
     foreach ($responses as $i => $response) {
         $name = $crawler->getMatch($response, '/user-name.*?\<span\>(.*?)\<\/span\>/is');
-        if (false === $name) {
+        if (FALSE === $name) {
             continue;
         }
         $sign_icon  = $crawler->getMatch($response, '/class=\"signicon_iden\"\>\s*(.*?)\s*\</is');
@@ -51,12 +56,12 @@ function process(Crawler $crawler, $urls)
             //mysql 5.6 之后一个表里面支持多个timestamp的值为当前时间戳
         ];
 
-        if (false === T('imooc_user')->insert($insert)) {
+        if (FALSE === T('imooc_user')->insert($insert)) {
             echo "failed to insert ";
             continue;
         }
     }
-    return false;
+    return FALSE;
 }
 
 
