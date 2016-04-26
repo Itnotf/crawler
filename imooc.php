@@ -6,7 +6,7 @@
 error_reporting(E_ALL);
 
 require_once "lib/Crawler.php";
-require_once "lib/SimpleDao.php";
+require_once "vendor/autoload.php";
 
 $crawler = new Crawler();
 
@@ -48,10 +48,10 @@ function process(Crawler $crawler, $urls)
             'integral'   => $integral,
             'experience' => $experience,
             'user_img'   => $user_img,
-            'create_at'  => date('Y-m-d H:i:s', time()),
+            //mysql 5.6 之后一个表里面支持多个timestamp的值为当前时间戳
         ];
 
-        if (false === T('imooc')->insert($insert)) {
+        if (false === T('imooc_user')->insert($insert)) {
             echo "failed to insert ";
             continue;
         }

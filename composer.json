@@ -1,0 +1,5 @@
+{
+    "require": {
+        "catfan/Medoo": "^1.0"
+    }
+}
