@@ -11,9 +11,9 @@ require_once dirname(__FILE__) . '../autoload.php';
 //提供 url ，正则，插入数据库
 //比较多进程，多线程，分布式爬虫
 //将url与正则插入数据库，
+use lib\Factory;
 
-
-$crawler = new Crawler();
+$crawler = new Crawler(); Factory::$f->ABB->insert();
 
 for ($urls = [], $id = 3226881; $id > 0; $id--) {
     $urls[$id] = "http://www.imooc.com/u/{$id}/courses";

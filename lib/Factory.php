@@ -1,39 +1,43 @@
 <?php
 
 /**
- * //F::$f->Database_Table->insert();
+ * 写个工厂数据库单例玩玩
+ * F::$f->Database->insert();
  *
  * Date: 2016/4/26
  * Time: 19:11
  */
+namespace lib;
+
 class Factory
 {
     private static $instances = array();
 
-    private static $f = NULL;
+    public static $f = NULL;
 
-    public function __construct()
+    public static function init()
     {
         if (NULL === self::$f) {
             self::$f = new self();
         }
     }
 
-    public function getInstance($name)
+    public function getInstance($database)
     {
-        list($database, $table) = explode('_', $name);
-        $key = $database . $table;
+        $key = $database;
 
         if (!isset(self::$instances[$key])) {
-            self::$instances[$key] = new DB($database, $table);
+            self::$instances[$key] = new DB($database);
         }
 
         return self::$instances[$key];
     }
-    
-    public function __get($name)
+
+    public function __get($database)
     {
-        return $this->getInstance($name);
+        return $this->getInstance($database);
     }
 
 }
+
+Factory::init();

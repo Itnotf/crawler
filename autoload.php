@@ -23,7 +23,20 @@ if (!defined('PATH_LOG')) {
 }
 
 if (!defined('PATH_CONF')) {
-    define('PATH_CONF', BASE_PATH . DS . 'conf');
+    define('PATH_CONF', BASE_PATH . DS . 'config');
 }
 
 require_once BASE_PATH . '/vendor/autoload.php';
+
+function autoload_function($class)
+{
+    $class = implode(DS, explode('\\', $class));
+    $path  = BASE_PATH . DS . $class . '.php';
+    if (file_exists($path)) {
+        require_once $path;
+    }
+}
+
+spl_autoload_register('autoload_function');
+
+\lib\Config::set('mysql', require_once PATH_CONF . '/crawler.php');
