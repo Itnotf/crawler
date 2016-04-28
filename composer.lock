@@ -9,7 +9,7 @@
     "packages": [
         {
             "name": "catfan/medoo",
-            "version": "v1.0.2",
+            "version": "v1.0.2"
             "source": {
                 "type": "git",
                 "url": "https://github.com/catfan/Medoo.git",
