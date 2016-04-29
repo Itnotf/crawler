@@ -11,12 +11,16 @@ define('TASK_ID', 1);
 
 require_once dirname(__FILE__) . '/../../autoload.php';
 
-$file_name = PATH_TASK . TASK_NAME . '_' . TASK_ID . '.csv';
+$file_name = PATH_TASK . TASK_NAME . '_' . TASK_ID;
 $tasks     = [];
 $base_url  = 'http://www.baidu.com/';
 
-for ($i = 0, $count = 0; $i < 300000; $i++, $count++) {
+for ($i = 0, $count = 0; $i < 30000; $i++, $count++) {
     $arr = [$base_url . $i, TASK_ID];
-    file_put_contents($file_name, implode(',', $arr), FILE_APPEND);
+    file_put_contents($file_name, implode(',', $arr) . "\n", FILE_APPEND);
+    if ($count >= MAX_TASK_NUM) {
+        $file_name .= $count;
+        $count = 0;
+    }
 }
 
