@@ -1,38 +1,22 @@
 <?php
 /**
+ * 将要爬取的信息每10000行生成一个 csv 文件, 写入data task 文件夹
  *
- * Date: 2016/4/26
- * Time: 18:47
+ * File: imooc_insert.php
+ * Time: 2016/4/29 19:20
+ * Author: No One
  */
-
-use \lib\Factory;
+define('TASK_NAME', 'imooc');
+define('TASK_ID', 1);
 
 require_once dirname(__FILE__) . '/../../autoload.php';
 
-$project_id = 1;
+$file_name = PATH_TASK . TASK_NAME . '_' . TASK_ID . '.csv';
+$tasks     = [];
+$base_url  = 'http://www.baidu.com/';
 
-$insert = [
-    'id'          => $project_id,
-    'pattern'     => '/.*/is',
-    'description' => '慕课网用户详情',
-];
-
-$replace = [
-    'pattern'     => '/.*/is',
-    'description' => '慕课网用户详情',
-];
-
-
-Factory::$f->crawler->insertReplace('project', $insert, $replace);
-
-for ($i = 0; $i < 3000000; $i++) {
-    $inserts[] = [
-        'url'        => "http://www.imooc.com/u/$i/courses",
-        'project_id' => $project_id,
-        'tag'        => "imooc_$i",
-    ];
-    if (count($inserts) >= 10000) {
-        Factory::$f->crawler->insert('task', $inserts);
-        $inserts = [];
-    }
+for ($i = 0, $count = 0; $i < 300000; $i++, $count++) {
+    $arr = [$base_url . $i, TASK_ID];
+    file_put_contents($file_name, implode(',', $arr), FILE_APPEND);
 }
+
