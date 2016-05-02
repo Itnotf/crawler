@@ -26,6 +26,24 @@ if (!defined('PATH_CONF')) {
     define('PATH_CONF', BASE_PATH . DS . 'config');
 }
 
+if (!defined('PATH_DATA')) {
+    define('PATH_DATA', BASE_PATH . DS . 'data');
+}
+
+
+if (!defined('PATH_TASK')) {
+    define('PATH_TASK', PATH_DATA . DS . 'task/');
+}
+
+
+if (!defined('PATH_RESULTS')) {
+    define('PATH_RESULTS', PATH_DATA . DS . 'results/');
+}
+
+if (!defined('MAX_TASK_NUM')) {
+    define('MAX_TASK_NUM', 10000);
+}
+
 require_once BASE_PATH . '/vendor/autoload.php';
 
 function autoload_function($class)
