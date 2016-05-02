@@ -11,7 +11,11 @@
  * Time: 18:56
  */
 
+use lib\Crawler;
+
 require_once dirname(__FILE__) . '/../../autoload.php';
+
+$crawler = new Crawler();
 
 $handle = opendir(PATH_TASK);
 while (FALSE !== ($file = readdir($handle))) {
@@ -22,17 +26,26 @@ while (FALSE !== ($file = readdir($handle))) {
 closedir($handle);
 
 foreach ($task_files as $task_file) {
-    $task = [];
-    $file = fopen(PATH_TASK . $task_file, 'r');
+    $tasks = [];
+    $file  = fopen(PATH_TASK . $task_file, 'r');
     while (!feof($file)) {
-        $task[] = fgetcsv($file);
+        $tasks[] = fgetcsv($file);
     }
     fclose($file);
-    getResults($task);
-    unlink(PATH_TASK . $task_file);
+    getResults($crawler, $tasks);
+    //unlink(PATH_TASK . $task_file);
 }
 
-function getResults($task)
+function getResults(Crawler $crawler, $tasks)
 {
-
+    //$t = xdebug_time_index();
+    foreach ($tasks as $task) {
+        $urls[] = $task[1];
+        if (count($urls) > 80) {
+            $responses = $crawler->getMultiResponse($urls);
+            //echo xdebug_time_index() - $t;
+            $urls = [];
+            exit;
+        }
+    }
 }
