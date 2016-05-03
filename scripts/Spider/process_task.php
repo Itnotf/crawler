@@ -38,12 +38,12 @@ foreach ($task_files as $task_file) {
 
 function getResults(Crawler $crawler, $tasks)
 {
-    //$t = xdebug_time_index();
+    $t = xdebug_time_index();
     foreach ($tasks as $task) {
         $urls[] = $task[1];
-        if (count($urls) > 80) {
+        if (count($urls) > 1000) {
             $responses = $crawler->getMultiResponse($urls);
-            //echo xdebug_time_index() - $t;
+            echo xdebug_time_index() - $t;
             $urls = [];
             exit;
         }
